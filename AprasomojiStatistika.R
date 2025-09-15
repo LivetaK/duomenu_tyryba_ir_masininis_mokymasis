@@ -1,4 +1,4 @@
-install.packages("skimr", repos = "https://cloud.r-project.org/") # Parsisiunčiame ir importuojame biblioteką darbui su duomenimis
+if (!require("skimr")) install.packages("skimr", repos = "https://cloud.r-project.org/") # Parsisiunčiame ir importuojame biblioteką darbui su duomenimis
 library(skimr)
 
 df <- read.csv("atrinkti_duomenys.csv", sep = ",", header = TRUE, check.names = FALSE) # Nuskaitome failą
