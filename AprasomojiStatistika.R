@@ -78,7 +78,7 @@ write.csv(stats_by_label_df, "csv/aprasomoji_statistika_by_label.csv", row.names
 for(lbl in unique(stats_by_label_df$Label)) {
   df_label <- stats_by_label_df[stats_by_label_df$Label == lbl, ]
   table_grob <- tableGrob(df_label, rows = NULL)
-  png(paste0("pics_aprasomoji_analize/aprasomoji_statistika_label_", lbl, ".png"), width = 800, height = 180)
+  png(paste0("pics_aprasomoji_analize/aprasomoji_statistika_label_", lbl, ".png"), width = 900, height = 180)
   grid.draw(table_grob)
   dev.off()
 }
