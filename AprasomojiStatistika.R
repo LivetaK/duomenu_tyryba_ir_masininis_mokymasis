@@ -21,7 +21,7 @@ write.csv(df_selected, "csv/atrinkti_duomenys_6_rodikliai.csv", row.names = FALS
 num_vars <- df_selected[, !names(df_selected) %in% "label"] # Analizei atrenkame tik kiekybinius rodikliu, neįtraukdami kokybinio rodiklio klasė (angl. label)
 
 stats_list <- lapply(num_vars, function(x) { # Atliekame aprašomąją duomenų analizę su atrinktais rodikliais
-  c(
+  round(c(
     Minimumas = min(x, na.rm = TRUE),
     Q1 = quantile(x, 0.25, na.rm = TRUE),
     Mediana = median(x, na.rm = TRUE),
@@ -30,7 +30,7 @@ stats_list <- lapply(num_vars, function(x) { # Atliekame aprašomąją duomenų 
     Maksimumas = max(x, na.rm = TRUE),
     Dispersija = var(x, na.rm = TRUE),
     `Neegzistuojancios reiksmes` = sum(is.na(x))
-  )
+  ), 4)
 })
 
 stats_df <- data.frame( # Paverčiame statistikos sąrašą į duomenų rėmą ir pridedame kintamųjų pavadinimus, kad būtų galima teisingai eksportuoti į .CSV failą
@@ -51,7 +51,7 @@ dev.off()
 stats_by_label <- lapply(split(df_selected, df_selected$label), function(sub_df) {
   num_vars <- sub_df[, !names(sub_df) %in% "label"]
   stats_list <- lapply(num_vars, function(x) {
-    c(
+    round(c(
       Minimumas = min(x, na.rm = TRUE),
       Q1 = quantile(x, 0.25, na.rm = TRUE),
       Mediana = median(x, na.rm = TRUE),
@@ -60,7 +60,7 @@ stats_by_label <- lapply(split(df_selected, df_selected$label), function(sub_df)
       Maksimumas = max(x, na.rm = TRUE),
       Dispersija = var(x, na.rm = TRUE),
       Neegzistuojancios.reiksmes = sum(is.na(x))
-    )
+    ), 4)
   })
 
   df_stats <- data.frame(
