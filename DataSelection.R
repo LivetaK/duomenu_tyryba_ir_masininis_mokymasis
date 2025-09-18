@@ -1,5 +1,4 @@
 library(dplyr)
-library(randomForest)
 
 if(!dir.exists("csv")) dir.create("csv")
 df <- read.csv("EKG_pupsniu_analize.csv", sep = ";", header = TRUE) # Duomenu užkrovimas
