@@ -3,7 +3,7 @@ library(dplyr)
 if(!dir.exists("csv")) dir.create("csv")
 df <- read.csv("EKG_pupsniu_analize.csv", sep = ";", header = TRUE) # Duomenu užkrovimas
 
-set.seed(67)  # Nustatome sėklą (angl. seed), kad būtų įmanoma atkartoti rezultatus 67 buvusi
+set.seed(67)  # Nustatome sėklą (angl. seed), kad būtų įmanoma atkartoti rezultatus
 df_sampled <- df %>%
   filter(!is.na(label)) %>%         # Pašaliname NA reikšmes klasės (angl. label) stulpelyje
   group_by(label) %>%               # Grupuojame duomenis pagal klasę (angl. label)
