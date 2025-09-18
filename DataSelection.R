@@ -40,7 +40,7 @@ normality_results <- normality_results %>% # Pritaikome reikšmes gautiems rezul
 write.csv(normality_results, "normality_check_results.csv", row.names = FALSE) # Išsaugome normalumo testo rezultatus į CSV failą
 
 
-kruskal_results <- sapply(num_vars, function(var) { # Kruskal-Wallis testas kiekvienam pozymiui, kadangi gavome, kad nei vienas is pozymiu nera normaliai pasiskirstes, negalime taikyti ANOVA F-test.
+kruskal_results <- sapply(num_vars, function(var) { # Kruskal-Wallis testas kiekvienam požymiui, kadangi gavome, kad nei vienas iš požymių nėra normaliai pasiskirstę, negalime taikyti ANOVA F-test.
   formula <- as.formula(paste(var, "~ label"))
   kruskal.test(formula, data = df_sampled)$p.value
 })
