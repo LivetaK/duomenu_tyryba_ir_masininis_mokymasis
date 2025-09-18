@@ -14,7 +14,7 @@ df <- read.csv("csv/atrinkti_duomenys.csv", sep = ",", header = TRUE, check.name
 # --- Aprašomoji duomenų analizė (bendra)
 
 #cols_to_keep <- c("RR_l_0.RR_l_1", "RR_l_1.RR_l_2", "signal_mean", "signal_std", "R_val", "P_val", "label") # Pirminiai rodikliai,
-                                                                                                              #kuriuos atrinkome diskusijos ir medicininio reiksmingumo budu
+                                                                                                              #kuriuos atrinkome diskusijos ir medicininio reikšmingumo būdu
 
 cols_to_keep <- c("signal_std", "wl_side", "R_val", "P_val", "RR_r_0.RR_r_1", "Q_val", "label") # Parenkame kuriuos rodiklius norime pasilikti analizei
 
