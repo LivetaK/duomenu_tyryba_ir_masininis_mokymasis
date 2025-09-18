@@ -47,6 +47,6 @@ kruskal_results <- sapply(num_vars, function(var) { # Kruskal-Wallis testas kiek
 
 # Rusiuojame pagal svarbą
 kruskal_results <- sort(kruskal_results)
-kruskal_results[1:6]  # Top 6 reiksmes, jas ir naudosime tolesniuose skaičiavimuose
+kruskal_results[1:6]  # Top 6 reikšmes, jas ir naudosime tolesniuose skaičiavimuose
 
 
