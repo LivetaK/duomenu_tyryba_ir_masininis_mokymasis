@@ -13,7 +13,10 @@ df <- read.csv("csv/atrinkti_duomenys.csv", sep = ",", header = TRUE, check.name
 
 # --- Aprašomoji duomenų analizė (bendra)
 
-cols_to_keep <- c("RR_l_0.RR_l_1", "RR_l_1.RR_l_2", "signal_mean", "signal_std", "R_val", "P_val", "label") # Parenkame kuriuos rodiklius norime pasilikti analizei
+#cols_to_keep <- c("RR_l_0.RR_l_1", "RR_l_1.RR_l_2", "signal_mean", "signal_std", "R_val", "P_val", "label") # Pirminiai rodikliai,
+                                                                                                              #kuriuos atrinkome diskusijos ir medicininio reikšmingumo būdu
+
+cols_to_keep <- c("signal_std", "wl_side", "R_val", "P_val", "RR_r_0.RR_r_1", "Q_val", "label") # Parenkame kuriuos rodiklius norime pasilikti analizei
 
 df_selected <- df[, cols_to_keep] # Sukuriame naują duomenų rinkinį su 7 pasirinktais rodikliais
 write.csv(df_selected, "csv/atrinkti_duomenys_6_rodikliai.csv", row.names = FALSE) # Išsaugome naują duomenų rinkinį į CSV failą
