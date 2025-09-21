@@ -10,7 +10,7 @@ if(!dir.exists("csv/aprasomojiStatistika")) dir.create("csv/aprasomojiStatistika
 # --- Nuskaitome duomenis
 
 df <- read.csv("csv/clean_data_by_label/raw_data_1500_6.csv", sep = ",", header = TRUE, check.names = FALSE) # Nuskaitome failą
-
+df_selected <- df # Sukuriame df_selected kaip df kopiją, kad būtų galima naudoti tolesnėje analizėje
 # --- Aprašomoji duomenų analizė (bendra)
 
 num_vars <- df_selected[, !names(df_selected) %in% "label"] # Analizei atrenkame tik kiekybinius rodikliu, neįtraukdami kokybinio rodiklio klasė (angl. label)
