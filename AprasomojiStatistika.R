@@ -5,21 +5,13 @@ library(reshape2)
 library(gridExtra)
 library(grid)
 
-if(!dir.exists("csv")) dir.create("csv")
+if(!dir.exists("csv/aprasomojiStatistika")) dir.create("csv/aprasomojiStatistika")
 
 # --- Nuskaitome duomenis
 
-df <- read.csv("csv/atrinkti_duomenys.csv", sep = ",", header = TRUE, check.names = FALSE) # Nuskaitome failą
+df <- read.csv("csv/clean_data_by_label/raw_data_1500_6.csv", sep = ",", header = TRUE, check.names = FALSE) # Nuskaitome failą
 
 # --- Aprašomoji duomenų analizė (bendra)
-
-#cols_to_keep <- c("RR_l_0.RR_l_1", "RR_l_1.RR_l_2", "signal_mean", "signal_std", "R_val", "P_val", "label") # Pirminiai rodikliai,
-                                                                                                              #kuriuos atrinkome diskusijos ir medicininio reikšmingumo būdu
-
-cols_to_keep <- c("signal_std", "wl_side", "R_val", "P_val", "RR_r_0.RR_r_1", "Q_val", "label") # Parenkame kuriuos rodiklius norime pasilikti analizei
-
-df_selected <- df[, cols_to_keep] # Sukuriame naują duomenų rinkinį su 7 pasirinktais rodikliais
-write.csv(df_selected, "csv/atrinkti_duomenys_6_rodikliai.csv", row.names = FALSE) # Išsaugome naują duomenų rinkinį į CSV failą
 
 num_vars <- df_selected[, !names(df_selected) %in% "label"] # Analizei atrenkame tik kiekybinius rodikliu, neįtraukdami kokybinio rodiklio klasė (angl. label)
 
@@ -41,14 +33,7 @@ stats_df <- data.frame( # Paverčiame statistikos sąrašą į duomenų rėmą i
   do.call(rbind, stats_list)
 )
 
-write.csv(stats_df, "csv/aprasomoji_atrinktu_duomenu_statistika.csv", row.names = FALSE) # Išsaugome aprašomosios duomenų analizės rezultatų rinkinį į .CSV failą
-
-if (!dir.exists("pics_aprasomoji_analize")) dir.create("pics_aprasomoji_analize")
-
-table_grob <- tableGrob(stats_df, rows = NULL) # Sukuriame lentelę iš gautų rezultatų excel failo
-png("pics_aprasomoji_analize/aprasomoji_statistika_bendras_vaizdas.png", width = 800, height = 180)
-grid.draw(table_grob)
-dev.off()
+write.csv(stats_df, "csv/aprasomojiStatistika/aprasomoji_atrinktu_duomenu_statistika.csv", row.names = FALSE) # Išsaugome aprašomosios duomenų analizės rezultatų rinkinį į .CSV failą
 
 # --- Aprašomoji duomenų analizė pagal klases (label)
 stats_by_label <- lapply(split(df_selected, df_selected$label), function(sub_df) {
@@ -76,15 +61,7 @@ stats_by_label <- lapply(split(df_selected, df_selected$label), function(sub_df)
 
 stats_by_label_df <- do.call(rbind, stats_by_label)
 
-write.csv(stats_by_label_df, "csv/aprasomoji_statistika_by_label.csv", row.names = FALSE)
-
-for(lbl in unique(stats_by_label_df$Label)) {
-  df_label <- stats_by_label_df[stats_by_label_df$Label == lbl, ]
-  table_grob <- tableGrob(df_label, rows = NULL)
-  png(paste0("pics_aprasomoji_analize/aprasomoji_statistika_label_", lbl, ".png"), width = 900, height = 180)
-  grid.draw(table_grob)
-  dev.off()
-}
+write.csv(stats_by_label_df, "csv/aprasomojiStatistika/aprasomoji_statistika_by_label.csv", row.names = FALSE)
 
 # --- Stačiakampės diagramos (boxplot) pagal klases (label)
 num_vars <- setdiff(names(df_selected), "label") # Išrenkame tik kiekybinius kintamuosius, neįtraukdami kokybinio kintamojo klasė (angl. label)
