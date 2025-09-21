@@ -9,7 +9,7 @@ if(!dir.exists("csv/aprasomojiStatistika")) dir.create("csv/aprasomojiStatistika
 
 # --- Nuskaitome duomenis
 
-df <- read.csv("csv/clean_data_by_label/raw_data_1500_6.csv", sep = ",", header = TRUE, check.names = FALSE) # Nuskaitome failą
+df <- read.csv("csv/raw_data_1500_6.csv", sep = ",", header = TRUE, check.names = FALSE) # Nuskaitome failą
 df_selected <- df # Sukuriame df_selected kaip df kopiją, kad būtų galima naudoti tolesnėje analizėje
 # --- Aprašomoji duomenų analizė (bendra)
 
@@ -69,7 +69,8 @@ num_vars <- setdiff(names(df_selected), "label") # Išrenkame tik kiekybinius ki
 if (!dir.exists("plots_aprasomoji_analize")) dir.create("plots_aprasomoji_analize")
 
 for (var in num_vars) {
-  p <- ggplot(df_selected, aes(x = factor(label, levels = c(0,1,2), labels = c("Klasė 0", "Klasė 1", "Klasė 2")),
+  p <- ggplot(df_selected, aes(x = factor(label, levels = c(0,1,2),
+                                         labels = c("Klasė 0", "Klasė 1", "Klasė 2")),
                                y = .data[[var]], fill = factor(label))) +
     geom_boxplot(outlier.color = "red", alpha = 0.6) +
     labs(title = paste(var, "stačiakampė diagrama pagal klasę"),
@@ -77,8 +78,11 @@ for (var in num_vars) {
          y = var) +
     theme_minimal()
 
+  # Sanitize variable name for filename (replace unsafe chars with "_")
+  safe_var <- gsub("[^[:alnum:]_]", "_", var)
+
   ggsave(
-    filename = paste0("plots_aprasomoji_analize/boxplot_", var, ".png"),
+    filename = paste0("plots_aprasomoji_analize/boxplot_", safe_var, ".png"),
     plot = p,
     width = 7, height = 7, dpi = 300
   )
