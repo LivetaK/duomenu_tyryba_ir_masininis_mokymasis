@@ -70,15 +70,15 @@ if (!dir.exists("plots_aprasomoji_analize")) dir.create("plots_aprasomoji_analiz
 
 for (var in num_vars) {
   p <- ggplot(df_selected, aes(x = factor(label, levels = c(0,1,2),
-                                         labels = c("Klasė 0", "Klasė 1", "Klasė 2")),
-                               y = .data[[var]], fill = factor(label))) +
+  labels = c("Klasė 0", "Klasė 1", "Klasė 2")),
+  y = .data[[var]], fill = factor(label))) +
     geom_boxplot(outlier.color = "red", alpha = 0.6) +
     labs(title = paste(var, "stačiakampė diagrama pagal klasę"),
          x = "Klasė (label)",
          y = var) +
     theme_minimal()
 
-  # Sanitize variable name for filename (replace unsafe chars with "_")
+  # Sutvarkome kintamuosius
   safe_var <- gsub("[^[:alnum:]_]", "_", var)
 
   ggsave(
@@ -86,4 +86,57 @@ for (var in num_vars) {
     plot = p,
     width = 7, height = 7, dpi = 300
   )
+}
+
+# --- Histogramos pagal klases (label)
+
+vars_to_plot <- c("wl_side", "Q_val") # Požymiai, kurių histogramos bus braižomos
+
+# Požymių reikšmių histogramos pagal klasę (label)
+label_values <- c(0, 1, 2)
+
+if (!dir.exists("histograms_by_label")) dir.create("histograms_by_label")
+
+# Iteruojame per kiekvieną klasę (label)
+for (label_value in label_values) {
+  df_subset <- df_selected[df_selected$label == label_value, ]
+
+  for (var in vars_to_plot) {
+    p <- ggplot(df_subset, aes(x = .data[[var]])) +
+      geom_histogram(bins = 30, fill = "skyblue", color = "black", alpha = 0.7) +
+      labs(
+        title = paste(var, "pozymio histograma", "klasei", label_value),
+        x = var,
+        y = "Daznis"
+      ) +
+      theme_minimal()
+
+    safe_var <- gsub("[^[:alnum:]_]", "_", var)
+    ggsave(
+      filename = paste0("histograms_by_label/hist_", safe_var, "_label_", label_value, ".png"),
+      plot = p,
+      width = 7, height = 5, dpi = 300
+    )
+  }
+}
+
+vars_to_plot <- c("wl_side", "Q_val")  # Parenkame požymius
+
+for (var in vars_to_plot) {
+  p <- ggplot(df_selected, aes(x = .data[[var]], fill = factor(label))) +
+    geom_histogram(position = "identity", alpha = 0.5, bins = 30, color = "black") +
+    labs(
+      title = paste(var, "pozymio histograma", "pagal klases"),
+      x = var,
+      y = "Daznis",
+      fill = "Klase"
+    ) +
+    theme_minimal()
+
+  safe_var <- gsub("[^[:alnum:]_]", "_", var)  # Sutvarkome kintamuosius
+    ggsave(
+      filename = paste0("histograms_by_label/hist_joined", safe_var,".png"),
+      plot = p,
+      width = 7, height = 5, dpi = 300
+    )
 }

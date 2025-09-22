@@ -18,9 +18,6 @@ df[feature_cols] <- lapply(df[feature_cols], function(x) {
 df_clean <- df %>%
   filter(if_all(all_of(feature_cols), ~ is.finite(.) & !is.na(.)))
 
-# Išsaugome išvalytus duomenis
-# write.csv(df_clean, "csv/atrinkti_duomenys.csv", row.names = FALSE)
-
 # Nustatome, kurie požymiai yra kiekybiniai
 num_vars <- setdiff(names(df_clean)[vapply(df_clean, is.numeric, logical(1))], "label")
 
