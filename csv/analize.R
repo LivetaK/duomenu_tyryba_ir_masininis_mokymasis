@@ -2,30 +2,61 @@ library(dplyr)
 library(tidyr)
 library(ggplot2)
 
-# 1) Nuskaitymas
 df <- read.csv("csv/clean_data.csv")
 
-# 2) Min–Max normalizacija išlaikant 'label'
+
 min_max <- df %>%
   mutate(across(-label, ~ (.-min(.)) / (max(.)-min(.)), .names = "{.col}"))
 
-# 3) Paverčiame label į faktorius (tvarkingesnė ašis)
+#Paverčiame label į faktorius (tvarkingesnė ašis)
 min_max <- min_max %>% mutate(label = as.factor(label))
 
-# 4) Kiekvienos klasės vidurkių skaičiavimas
+#Kiekvienos klasės vidurkių skaičiavimas
 avg_vals <- min_max %>%
   group_by(label) %>%
   summarise(across(-any_of("label"), ~ mean(.x, na.rm = TRUE)),
             .groups = "drop")
 
-# 5) Duomenų pavertimas į long formatą
+#Duomenų pavertimas į long formatą dėl ggplot2
 avg_long <- avg_vals %>%
   pivot_longer(-label, names_to = "Pozymis", values_to = "Reiksme")
 
-# 6) Stulpelinė diagrama su „Set2“ palete
+
 ggplot(avg_long, aes(x = label, y = Reiksme, fill = Pozymis)) +
   geom_col(position = "dodge") +
   labs(title = "Normuotos reikšmės pagal pūpsnio klasę (Min–Max)",
        x = "Pūpsnio klasė", y = "Normuota reikšmė") +
   theme_minimal() +
-  scale_fill_brewer(palette = "Paired")  # Naudoja ColorBrewer Set2 paletę
+  scale_fill_brewer(palette = "Paired")
+
+
+
+
+label_col <- "label"
+pozymiai <- df[ , !(names(df) %in% label_col)]
+labels <- df[[label_col]]
+
+#Vidurkio–dispersijos normalizacija
+vidurkis_sd <- as.data.frame(scale(pozymiai))
+vidurkis_sd$label <- labels
+
+
+vidurkis_sd <- vidurkis_sd %>% mutate(label = as.factor(label))
+
+#Apskaičiuojame kiekvienos klasės vidurkius
+avg_vals_z <- vidurkis_sd %>%
+  group_by(label) %>%
+  summarise(across(-any_of("label"), ~ mean(.x, na.rm = TRUE)),
+            .groups = "drop")
+
+#Duomenis paverčiame į long formatą
+avg_long_z <- avg_vals_z %>%
+  pivot_longer(-label, names_to = "Pozymis", values_to = "Reiksme")
+
+
+ggplot(avg_long_z, aes(x = label, y = Reiksme, fill = Pozymis)) +
+  geom_col(position = "dodge") +
+  labs(title = "Normuotos reikšmės pagal pūpsnio klasę (Vidurkis–SD)",
+       x = "Pūpsnio klasė", y = "Normuota reikšmė") +
+  theme_minimal() +
+  scale_fill_brewer(palette = "Paired")
