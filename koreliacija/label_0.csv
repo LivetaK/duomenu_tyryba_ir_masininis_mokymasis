@@ -1,0 +1,16 @@
+Požymis 1,Požymis 2,Koreliacija,p reikšmė
+signal_std,wl_side,-0.3804,0.0
+signal_std,R_val,0.8085,0.0
+signal_std,RR_r_0/RR_r_1,-0.1615,0.0006
+signal_std,P_val,0.1984,0.0
+signal_std,Q_val,0.1302,0.0055
+wl_side,R_val,0.0245,0.603
+wl_side,RR_r_0/RR_r_1,0.1965,0.0
+wl_side,P_val,-0.2799,0.0
+wl_side,Q_val,-0.0807,0.0861
+R_val,RR_r_0/RR_r_1,-0.0519,0.2705
+R_val,P_val,0.1289,0.006
+R_val,Q_val,0.165,0.0004
+RR_r_0/RR_r_1,P_val,-0.1407,0.0027
+RR_r_0/RR_r_1,Q_val,-0.0896,0.0566
+P_val,Q_val,0.7539,0.0
