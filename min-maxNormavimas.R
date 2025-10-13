@@ -1,5 +1,5 @@
 
-df <- read.csv("lab2/NO_missing_values_1498_6.csv", sep = ",", stringsAsFactors = FALSE)
+df <- read.csv("csv/raw_data_1498_6.csv", sep = ",", stringsAsFactors = FALSE)
 
 
 label_col <- "label"
@@ -33,4 +33,4 @@ min_max <- as.data.frame(lapply(pozymiai_num, min_max_norm))
 min_max$label <- df[[label_col]]
 
 
-write.csv(min_max, "lab2/normalized_NO_missing_1498_6.csv", row.names = FALSE)
+write.csv(min_max, "csv/normalized_raw_data_1498_6.csv", row.names = FALSE)
