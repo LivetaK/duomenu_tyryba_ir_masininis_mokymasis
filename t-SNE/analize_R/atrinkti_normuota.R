@@ -7,7 +7,7 @@ library(ggplot2)
 # 1. Įkeliame duomenis
 
 
-ekg_data <- read.csv("t-SNE/normalized_NO_missing_1498_6.csv")
+ekg_data <- read.csv("../normalized_NO_missing_1498_6.csv")
 
 # 2. Atskiriame požymius ir klases
 features <- ekg_data[, -ncol(ekg_data)]
