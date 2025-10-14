@@ -1,4 +1,4 @@
-df <- read.csv("csv/final_clean_all_data.csv", stringsAsFactors = FALSE)
+df <- read.csv("EKG_pupsniu_analize.csv", stringsAsFactors = FALSE)
 
 label_col <- "label"
 pozymiai <- df[ , !(names(df) %in% label_col), drop = FALSE]
@@ -24,13 +24,8 @@ min_max_norm <- function(x) {
 }
 
 
-vidurkis_sd <- as.data.frame(scale(pozymiai_num))
-vidurkis_sd[!is.finite(as.matrix(vidurkis_sd))] <- 0
-vidurkis_sd$label <- df[[label_col]]
-
 # Min–max
 min_max <- as.data.frame(lapply(pozymiai_num, min_max_norm))
 min_max$label <- df[[label_col]]
 
-write.csv(vidurkis_sd, "csv/normalized_mean_sd.csv", row.names = FALSE)
-write.csv(min_max, "csv/normalized_min_max.csv", row.names = FALSE)
+write.csv(min_max, "csv/normalized_EKG_pupsniu_analize.csv", row.names = FALSE)
