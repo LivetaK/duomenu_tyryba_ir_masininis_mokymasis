@@ -13,14 +13,14 @@ safe_dir <- function(path) {
 
 # ---- Baziniai folderiai rezultatams ----
 safe_dir("2_lab_csv/aprasomojiStatistika")
-safe_dir("2_lab_plots_aprasomoji_analize")
-safe_dir("2_lab_histograms_by_label")
+safe_dir("t-SNE/2_lab_plots_aprasomoji_analize")
+safe_dir("2_lab/2_lab_histograms_by_label")
 
 # ---- Pagrindinė analizės funkcija ----
 analyze_dataset <- function(input_path, dataset_name) {
   csv_out  <- file.path("2_lab_csv/aprasomojiStatistika", dataset_name)
-  plots_out <- file.path("2_lab_plots_aprasomoji_analize", dataset_name)
-  hist_out  <- file.path("2_lab_histograms_by_label", dataset_name)
+  plots_out <- file.path("t-SNE/2_lab_plots_aprasomoji_analize", dataset_name)
+  hist_out  <- file.path("2_lab/2_lab_histograms_by_label", dataset_name)
 
   safe_dir(csv_out); safe_dir(plots_out); safe_dir(hist_out)
 
@@ -141,7 +141,7 @@ analyze_dataset <- function(input_path, dataset_name) {
 }
 
 # ---- Automatinis visu CSV apdorojimas ----
-input_files <- list.files("lab2", pattern = "\\.csv$", full.names = TRUE)
+input_files <- list.files("2_lab_csv/lab2", pattern = "\\.csv$", full.names = TRUE)
 input_files <- input_files[!grepl("normalized", input_files, ignore.case = TRUE)]
 
 for (file in input_files) {
