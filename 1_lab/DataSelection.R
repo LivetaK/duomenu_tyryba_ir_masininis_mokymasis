@@ -11,7 +11,7 @@ df$label <- as.factor(df$label)
 feature_cols <- setdiff(names(df), "label")
 df[feature_cols] <- lapply(df[feature_cols], function(x) {
   if (is.numeric(x)) return(x)
-  as.numeric(gsub(",", ".", as.character(x)))
+  as.numeric(gsub(",", "..", as.character(x)))
 })
 
 # Paliekame tik tas eilutes, kuriose nėra NA ar Inf reikšmių

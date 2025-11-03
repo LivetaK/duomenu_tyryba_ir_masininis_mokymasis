@@ -7,7 +7,7 @@ pozymiai <- df[ , !(names(df) %in% label_col), drop = FALSE]
 pozymiai_num <- as.data.frame(lapply(pozymiai, function(x) {
   if (is.numeric(x)) return(x)
   x <- as.character(x)
-  x <- gsub(",", ".", x, fixed = TRUE)
+  x <- gsub(",", "..", x, fixed = TRUE)
   suppressWarnings(as.numeric(x))
 }), stringsAsFactors = FALSE)
 
