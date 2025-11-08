@@ -1,0 +1,4 @@
+empirinis (k=76): orig=0.266, tsne=0.355
+alkunes (k=6): orig=0.212, tsne=0.285
+silueto (k=3): orig=0.297, tsne=0.288
+dendograma (k=9): orig=0.236, tsne=0.258
